@@ -9,11 +9,9 @@ fn main() {
   let mut prev: i32 = 1
   while true {
     let v: i32 = btn.value()
-    // falling edge (pressed) — nested if (Klin has no &&)
-    if prev != 0 {
-      if v == 0 {
-        led.toggle()
-      }
+    // falling edge (pressed)
+    if prev != 0 && v == 0 {
+      led.toggle()
     }
     prev = v
     let mut i: i32 = 0

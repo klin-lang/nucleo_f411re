@@ -11,9 +11,10 @@ board-shaped **examples** (LED, VCP UART, PWM, ADC, button, I2C, SPI, RC).
 
 Klin issues: [075](https://github.com/klin-lang/klin/blob/main/issues/075-board-pack-init-host.md)
 (board pack / init), [074](https://github.com/klin-lang/klin/blob/main/issues/074-board-ioc-klin-mod.md)
-(`$board` / `.ioc`), [061](https://github.com/klin-lang/klin/blob/main/issues/061-micropython-machine-api.md).
+(`$board` / `.ioc`), [097](https://github.com/klin-lang/klin/blob/main/issues/097-logical-ops.md)
+(`&&` / `||`), [061](https://github.com/klin-lang/klin/blob/main/issues/061-micropython-machine-api.md).
 
-## Status (`@v0.1.2`)
+## Status (`@v0.1.3`)
 
 | Piece | Status |
 |---|---|
@@ -57,7 +58,7 @@ $board("board/nucleo_f411re.ioc")
 ```
 
 ```sh
-klin get github/klin-lang/nucleo_f411re@v0.1.2
+klin get github/klin-lang/nucleo_f411re@v0.1.3
 klin get github/klin-lang/machine_stm32@v0.5.0
 cd examples/blink && make KLIN=/path/to/bin/klin.dart deps emit elf
 ```
@@ -69,7 +70,7 @@ Needs `arm-none-eabi-gcc`. Flash with OpenOCD / probe-rs / STM32CubeProgrammer.
 ```sh
 klin init nucleo-f411 my_blink
 # ships local board/*.ioc + startup; then optionally:
-#   require github/klin-lang/nucleo_f411re v0.1.2
+#   require github/klin-lang/nucleo_f411re v0.1.3
 ```
 
 ## License
