@@ -1,0 +1,11 @@
+module nucleo_f411re
+import testing
+
+fn test_version() {
+  testing.expect_eq(version(), 1)
+}
+
+fn test_ld2_is_pa5() {
+  testing.expect_eq(ld2_port(), 0)
+  testing.expect_eq(ld2_pin(), 5)
+}

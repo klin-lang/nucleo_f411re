@@ -1,0 +1,38 @@
+/// LD2 pin as TIM2_CH1 RC/servo sweep (50 Hz, 1000..=2000 µs). Unplug LED path if driving a servo.
+import "github/klin-lang/machine_stm32" machine
+import "../../nucleo_f411re" board
+
+@[link("startup.s")]
+fn main() {
+  let servo = machine.rc_out(
+    cast(machine.Port, board.ld2_port()),
+    board.ld2_pin(),
+    2,
+    1,
+    1,
+    board.hsi_hz(),
+    50,
+    1000,
+    2000
+  )
+  while true {
+    let mut pos: i32 = 0
+    while pos <= 100000 {
+      servo.out(pos, 0)
+      let mut i: i32 = 0
+      while i < 50000 {
+        i = i + 1
+      }
+      pos = pos + 5000
+    }
+    pos = 100000
+    while pos >= 0 {
+      servo.out(pos, 0)
+      let mut i: i32 = 0
+      while i < 50000 {
+        i = i + 1
+      }
+      pos = pos - 5000
+    }
+  }
+}

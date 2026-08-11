@@ -1,0 +1,36 @@
+/// ST-Link VCP: USART2 PA2/PA3 @ 115200 — open /dev/ttyACM* on the host.
+import "github/klin-lang/machine_stm32" machine
+import "../../nucleo_f411re" board
+
+@[link("startup.s")]
+fn main() {
+  let u = machine.uart_out(
+    board.vcp_usart(),
+    cast(machine.Port, board.vcp_tx_port()),
+    board.vcp_tx_pin(),
+    board.vcp_af(),
+    cast(machine.Port, board.vcp_rx_port()),
+    board.vcp_rx_pin(),
+    board.vcp_af(),
+    board.hsi_hz(),
+    115200
+  )
+  let mut msg: [6]u8
+  msg[0] = 104
+  msg[1] = 101
+  msg[2] = 108
+  msg[3] = 108
+  msg[4] = 111
+  msg[5] = 10
+  while true {
+    u.write(msg)
+    if u.any() {
+      let b = u.read_u8()
+      u.write_u8(b)
+    }
+    let mut i: i32 = 0
+    while i < 800000 {
+      i = i + 1
+    }
+  }
+}

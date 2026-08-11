@@ -1,0 +1,29 @@
+/// I2C1 PB8/PB9 — configures bus, blinks LD2 (attach a slave for transfers).
+import "github/klin-lang/machine_stm32" machine
+import "../../nucleo_f411re" board
+
+@[link("startup.s")]
+fn main() {
+  let bus = machine.i2c_out(
+    1,
+    cast(machine.Port, board.i2c1_scl_port()),
+    board.i2c1_scl_pin(),
+    board.i2c1_af(),
+    cast(machine.Port, board.i2c1_sda_port()),
+    board.i2c1_sda_pin(),
+    board.i2c1_af(),
+    board.hsi_hz(),
+    100000
+  )
+  let led = machine.pin_out(cast(machine.Port, board.ld2_port()), board.ld2_pin())
+  while true {
+    led.toggle()
+    let mut i: i32 = 0
+    while i < 800000 {
+      i = i + 1
+    }
+    if false {
+      bus.deinit()
+    }
+  }
+}

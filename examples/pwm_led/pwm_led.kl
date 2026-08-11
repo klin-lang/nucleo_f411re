@@ -1,0 +1,36 @@
+/// LD2 = PA5 = TIM2_CH1 AF1 — soft PWM fade (HSI 16 MHz explicit).
+import "github/klin-lang/machine_stm32" machine
+import "../../nucleo_f411re" board
+
+@[link("startup.s")]
+fn main() {
+  let led = machine.pwm_out(
+    cast(machine.Port, board.ld2_port()),
+    board.ld2_pin(),
+    2,
+    1,
+    1,
+    board.hsi_hz()
+  )
+  led.freq(1000)
+  while true {
+    let mut d: i32 = 0
+    while d <= 65535 {
+      led.duty_u16(d)
+      let mut i: i32 = 0
+      while i < 2000 {
+        i = i + 1
+      }
+      d = d + 1024
+    }
+    d = 65535
+    while d >= 0 {
+      led.duty_u16(d)
+      let mut i: i32 = 0
+      while i < 2000 {
+        i = i + 1
+      }
+      d = d - 1024
+    }
+  }
+}

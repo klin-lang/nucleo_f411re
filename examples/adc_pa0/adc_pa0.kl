@@ -1,0 +1,21 @@
+/// A0 (PA0) ADC → PWM brightness on LD2.
+import "github/klin-lang/machine_stm32" machine
+import "../../nucleo_f411re" board
+
+@[link("startup.s")]
+fn main() {
+  let adc = machine.adc_out(cast(machine.Port, board.a0_port()), board.a0_pin(), 0)
+  let led = machine.pwm_out(
+    cast(machine.Port, board.ld2_port()),
+    board.ld2_pin(),
+    2,
+    1,
+    1,
+    board.hsi_hz()
+  )
+  led.freq(1000)
+  while true {
+    let v = adc.read_u16()
+    led.duty_u16(v)
+  }
+}

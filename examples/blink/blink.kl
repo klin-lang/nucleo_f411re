@@ -1,0 +1,15 @@
+/// Nucleo-F411RE LD2 blink via board pin helpers + machine_stm32.
+import "github/klin-lang/machine_stm32" machine
+import "../../nucleo_f411re" board
+
+@[link("startup.s")]
+fn main() {
+  let led = machine.pin_out(cast(machine.Port, board.ld2_port()), board.ld2_pin())
+  while true {
+    led.toggle()
+    let mut i: i32 = 0
+    while i < 1000000 {
+      i = i + 1
+    }
+  }
+}

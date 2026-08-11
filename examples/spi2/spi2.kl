@@ -1,0 +1,29 @@
+/// SPI2 PB13/14/15 — clock out 0xA5 (soft NSS left to the app).
+import "github/klin-lang/machine_stm32" machine
+import "../../nucleo_f411re" board
+
+@[link("startup.s")]
+fn main() {
+  let s = machine.spi_out(
+    2,
+    cast(machine.Port, board.spi2_sck_port()),
+    board.spi2_sck_pin(),
+    board.spi2_af(),
+    cast(machine.Port, board.spi2_miso_port()),
+    board.spi2_miso_pin(),
+    board.spi2_af(),
+    cast(machine.Port, board.spi2_mosi_port()),
+    board.spi2_mosi_pin(),
+    board.spi2_af(),
+    board.hsi_hz(),
+    1000000,
+    0
+  )
+  while true {
+    let _r = s.write_read_u8(0xA5)
+    let mut i: i32 = 0
+    while i < 10000 {
+      i = i + 1
+    }
+  }
+}

@@ -1,0 +1,5 @@
+module nucleo_f411re
+
+pub fn version(): i32 {
+  return 1
+}

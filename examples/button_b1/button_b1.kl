@@ -1,0 +1,22 @@
+/// B1 (PC13, active low) toggles LD2 while held / edge-poll.
+import "github/klin-lang/machine_stm32" machine
+import "../../nucleo_f411re" board
+
+@[link("startup.s")]
+fn main() {
+  let led = machine.pin_out(cast(machine.Port, board.ld2_port()), board.ld2_pin())
+  let btn = machine.pin_in(cast(machine.Port, board.b1_port()), board.b1_pin())
+  let mut prev: i32 = 1
+  while true {
+    let v = btn.value()
+    // falling edge (pressed)
+    if prev != 0 && v == 0 {
+      led.toggle()
+    }
+    prev = v
+    let mut i: i32 = 0
+    while i < 50000 {
+      i = i + 1
+    }
+  }
+}

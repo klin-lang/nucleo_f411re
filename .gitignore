@@ -1,0 +1,6 @@
+.deps/
+out/
+*.elf
+*.o
+stm32f411_regs.h
+stm32f411_regs.kl
